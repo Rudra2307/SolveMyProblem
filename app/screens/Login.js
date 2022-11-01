@@ -61,7 +61,7 @@ export default function Login({ navigation }) {
             <View style={{ flexDirection: "row" }}>
                 <Image source={require('../assets/images/logo.png')} style={styles.logo} />
             </View>
-            <Text style={styles.tagline}>Swachh</Text>
+            <Text style={styles.tagline}>Solve My Problem</Text>
             <View style={styles.form}>
                 <TextInput
                     style={styles.formInputs}

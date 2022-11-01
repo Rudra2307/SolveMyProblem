@@ -14,7 +14,7 @@ export default function CameraPage({navigation}) {
     
     const [type, setType] = useState(Camera.Constants.Type.back); useEffect(() => {
         (async () => {
-            const { status } = await Camera.requestPermissionsAsync();
+            const { status } = await Camera.requestForegroundPermissionsAsync();
             setHasPermission(status === 'granted');
         })();
     }, []); if (hasPermission === null) {
