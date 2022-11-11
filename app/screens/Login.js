@@ -22,31 +22,31 @@ export default function Login({ navigation }) {
                 "user_email": email,
                 "user_password": "12345"
             }
-            axios
-                .post(`${Constants.ApiLink}/api/login`, data)
-                .then(async function (response) {
-                    // handle success
+            // axios
+            //     .post(`${Constants.ApiLink}/api/login`, data)
+            //     .then(async function (response) {
+            //         // handle success
 
-                    try {
-                        const jsonValue = JSON.stringify(response.data);
-                        await AsyncStorage.setItem("userData", jsonValue);
-                        console.log("data: " + jsonValue);
-                    } catch (e) {
-                        // saving error
-                        console.log("Got error while storing data to async" + e);
-                    }
-                })
-                .catch(function (error) {
-                    // handle error
-                    console.log("ERROR ON HOME", error);
-                })
-                .finally(function () {
-                    // always executed
-                });
+            //         try {
+            //             const jsonValue = JSON.stringify(response.data);
+            //             await AsyncStorage.setItem("userData", jsonValue);
+            //             console.log("log: data: " + jsonValue);
+            //         } catch (e) {
+            //             // saving error
+            //             console.log("log: Got error while storing data to async" + e);
+            //         }
+            //     })
+            //     .catch(function (error) {
+            //         // handle error
+            //         console.log("log: ERROR ON HOME", error);
+            //     })
+            //     .finally(function () {
+            //         // always executed
+            //     });
             navigation.navigate('Home')
             // await fetchFonts();
         } catch (e) {
-            console.warn(e);
+            console.warn("log:",e);
         } finally {
             setDataLoaded(true);
             // Hiding the SplashScreen
