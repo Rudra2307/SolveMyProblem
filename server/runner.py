@@ -81,10 +81,12 @@ def api_login():
         else:
             data = request.get_data()
             data = json.loads(data)
+            print(data)
             user_name = data['user_email']
             user_password = data['user_password']
             loginuser = mongo.db.grievance_users.find_one({"$and": [{"$or": [{"user_email": user_name}, {
                 "user_phone": user_name}]}, {"user_password": user_password}]})
+            print(loginuser)
             if loginuser['user_type'] == 'general':
                 del loginuser["user_password"]
                 del loginuser["_id"]
