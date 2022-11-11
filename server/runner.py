@@ -313,7 +313,7 @@ def getLocationDetails(latitude, longitude):
     longitude = float(longitude)
 
     gp = herepy.GeocoderReverseApi(
-        'd6rKks8dfXLzDvHGl_mC9Q') 
+        'jHffeGfyLsxEo6Jn0G77H70R8mO9BXL6xQQgrJlqe4o') 
     response = gp.retrieve_addresses([latitude, longitude])
     response = str(response)
     response = ast.literal_eval(response)
@@ -347,7 +347,6 @@ def index():
     grievance_all = list(mongo.db.grievance.find())
 
     for i in grievance_all:
-        print(i["area"])
         if i['area'] == "unpredicted":
             
             longitude = float(i['longitude'])

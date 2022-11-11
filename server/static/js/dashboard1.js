@@ -9,6 +9,7 @@ $(function() {
    
     console.log(garbage);
     console.log(Seewage);
+    console.log(Pothole);
     // ============================================================== 
     // Sales overview]]
     // ============================================================== 
