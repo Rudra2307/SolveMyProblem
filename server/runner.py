@@ -208,6 +208,7 @@ def distance(lat1, lat2, lon1, lon2):
 
 @app.route('/api/history/<email>', methods=['GET'])
 def history(email):
+    print(email)
     grievance_all = list(mongo.db.grievance.find({"user_id": email}))
 
     for i in grievance_all:
@@ -222,7 +223,7 @@ def history(email):
 
         i["image_link"] = "http://"+ host+":5000" +i["image_link"][1:]
     
-    print(grievance_all)
+    print(grievance_all,"ey")
     
     return jsonify({"status": 'success', "data": grievance_all})
 
@@ -234,7 +235,8 @@ def uploader():
         data = json.loads(data)
 
         im = Image.open(BytesIO(base64.b64decode(data['image_link'])))
-        image_link='./static/uploads/'+str(datetime.now())+str(data['grievance_id'])+'.jpeg'
+        image_link='./static/uploads/'+str(data['grievance_id'])+'.jpeg'
+        print(image_link,im)
         im.save(image_link, 'JPEG')
         
         data["image_link"] = image_link

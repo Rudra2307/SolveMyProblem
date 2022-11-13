@@ -6,6 +6,8 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Constants from '../constants/text';
+import { LogBox } from 'react-native';
+
 export default function Login({ navigation }) {
     const [dataLoaded, setDataLoaded] = useState(false);
     const [email, onChangeemail] = useState('');
@@ -17,6 +19,7 @@ export default function Login({ navigation }) {
 
 
     const login = async () => {
+        LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
         try {
             const data={
                 "user_email": email,
@@ -30,7 +33,7 @@ export default function Login({ navigation }) {
                     try {
                         const jsonValue = JSON.stringify(response.data);
                         await AsyncStorage.setItem("userData", jsonValue);
-                        console.log("log: data: " + jsonValue);
+                        console.warn("log: data: " + jsonValue);
                     } catch (e) {
                         // saving error
                         console.log("log: Got error while storing data to async" + e);
@@ -44,7 +47,8 @@ export default function Login({ navigation }) {
                     // always executed
                     console.log("hello world")
                 });
-            navigation.navigate('Home')
+                
+                navigation.navigate('Home')
             // await fetchFonts();
         } catch (e) {
             console.warn("log:",e);
