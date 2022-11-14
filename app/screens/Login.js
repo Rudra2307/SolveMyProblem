@@ -6,6 +6,8 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Constants from '../constants/text';
+import { LogBox } from 'react-native';
+
 export default function Login({ navigation }) {
     const [dataLoaded, setDataLoaded] = useState(false);
     const [email, onChangeemail] = useState('');
@@ -17,33 +19,36 @@ export default function Login({ navigation }) {
 
 
     const login = async () => {
+        LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
         try {
             const data={
                 "user_email": email,
-                "user_password": "12345"
+                "user_password": password
             }
-            // axios
-            //     .post(`${Constants.ApiLink}/api/login`, data)
-            //     .then(async function (response) {
-            //         // handle success
+            axios
+                .post(`${Constants.ApiLink}/api/login`, data)
+                .then(async function (response) {
+                    // handle success
 
-            //         try {
-            //             const jsonValue = JSON.stringify(response.data);
-            //             await AsyncStorage.setItem("userData", jsonValue);
-            //             console.log("log: data: " + jsonValue);
-            //         } catch (e) {
-            //             // saving error
-            //             console.log("log: Got error while storing data to async" + e);
-            //         }
-            //     })
-            //     .catch(function (error) {
-            //         // handle error
-            //         console.log("log: ERROR ON HOME", error);
-            //     })
-            //     .finally(function () {
-            //         // always executed
-            //     });
-            navigation.navigate('Home')
+                    try {
+                        const jsonValue = JSON.stringify(response.data);
+                        await AsyncStorage.setItem("userData", jsonValue);
+                        console.warn("log: data: " + jsonValue);
+                    } catch (e) {
+                        // saving error
+                        console.log("log: Got error while storing data to async" + e);
+                    }
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log("log: ERROR ON HOME", error);
+                })
+                .finally(function () {
+                    // always executed
+                    console.log("hello world")
+                });
+                
+                navigation.navigate('Home')
             // await fetchFonts();
         } catch (e) {
             console.warn("log:",e);
