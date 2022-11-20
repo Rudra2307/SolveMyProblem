@@ -31,7 +31,7 @@ from os.path import join, dirname, realpath
 
 port = 5000
 # host = "192.168.43.95"
-host = "0.0.0.0"
+host = "192.168.0.105"
 
 app = Flask(__name__)
 
@@ -321,11 +321,10 @@ def getLocationDetails(latitude, longitude):
     gp = herepy.GeocoderReverseApi(
         '5TcSeD8CEX86f_x9Q263wOQT9DoFcV08FlwZQ7fZ5ls') 
     response = gp.retrieve_addresses([latitude, longitude])
-    response = str(response)
-    response = ast.literal_eval(response)
+  
+    response = response.as_json_string()
+    response = json.loads(response)
     response = response["items"][0]["address"]["label"]
-    
-
     return response
 
 

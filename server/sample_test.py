@@ -4,7 +4,8 @@ from herepy.here_api import HEREApi
 from herepy.utils import Utils
 from herepy.error import HEREError
 from herepy.models import GeocoderReverseResponse
-
+import json
+  
 def getLocationDetails(latitude, longitude):
     latitude = float(latitude)
     longitude = float(longitude)
@@ -13,13 +14,14 @@ def getLocationDetails(latitude, longitude):
 
     
     response = gp.retrieve_addresses([latitude, longitude])
-    print(response)
-    response = str(response)
-    response = ast.literal_eval(response)
-    print(response)
+    response = response.as_json_string()
+    response = json.loads(response)
     response = response["items"][0]["address"]["label"]
-
     return response
 
 result = getLocationDetails(19.310472, 72.854042)
 print(result)
+
+
+result = getLocationDetails(19.3919, 72.8397)
+# print(result)

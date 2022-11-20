@@ -40,7 +40,7 @@ export default function EntryRecords({ navigation }) {
 
                     try {
                         const jsonValue = response.data.data
-                        console.log(jsonValue)
+                        console.log(jsonValue,"heyy")
                         setHistoryData(jsonValue)
                         setDataLoaded(true);
                         console.log("data: " + jsonValue);
@@ -113,10 +113,11 @@ export default function EntryRecords({ navigation }) {
                     </View>
                     
                 </View>
+                {/* {console.log(item)} */}
                 <FlatList
                     style={{ marginBottom: hp("10%") }}
                     numColumns={1}                  // set number of columns 
-
+                    
                     data={historyData}
                     renderItem={({ item }) => <EntryCard props={item} />}
                     keyExtractor={item => item.id}
