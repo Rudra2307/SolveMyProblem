@@ -19,9 +19,9 @@ def getLocationDetails(latitude, longitude):
     response = response["items"][0]["address"]["label"]
     return response
 
-result = getLocationDetails(19.310472, 72.854042)
-print(result)
+# result = getLocationDetails(19.310472, 72.854042)
 
 
 result = getLocationDetails(19.3919, 72.8397)
+print(result)
 # print(result)
