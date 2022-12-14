@@ -31,7 +31,7 @@ from os.path import join, dirname, realpath
 
 port = 5000
 # host = "192.168.43.95"
-host = "192.168.0.105"
+host = "192.168.0.107"
 
 app = Flask(__name__)
 
