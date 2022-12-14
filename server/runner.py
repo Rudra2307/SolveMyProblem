@@ -31,7 +31,7 @@ from werkzeug.utils import secure_filename
 
 port = 5000
 # host = "192.168.43.95"
-host = "0.0.0.0"
+host = "192.168.0.107"
 
 app = Flask(__name__)
 
@@ -208,13 +208,15 @@ def distance(lat1, lat2, lon1, lon2):
 
 @app.route('/api/history/<email>', methods=['GET'])
 def history(email):
-    print(email)
+    email=email.strip()
+    print(email+";")
     grievance_all = list(mongo.db.grievance.find({"user_id": email}))
-
+    # print(grievance_all)
     for i in grievance_all:
-        if 'area' not in i or i['area'] == "unpredicted":
+        if 'area' not in i or i['area'] == None:
             longitude = float(i['longitude'])
             latitude = float(i['latitude'])
+            print(latitude,longitude)
             res = getLocationDetails(latitude, longitude)
             update_location = mongo.db.grievance.find_one_and_update(
                 {'grievance_id': i["grievance_id"]}, {'$set': {"area": res}})
@@ -316,13 +318,13 @@ def getLocationDetails(latitude, longitude):
     latitude = float(latitude)
     longitude = float(longitude)
 
-    gp = herepy.GeocoderReverseApi('jHffeGfyLsxEo6Jn0G77H70R8mO9BXL6xQQgrJlqe4o') 
+    gp = herepy.GeocoderReverseApi(
+        '5TcSeD8CEX86f_x9Q263wOQT9DoFcV08FlwZQ7fZ5ls') 
     response = gp.retrieve_addresses([latitude, longitude])
-    response = str(response)
-    print(latitude)    
-    response = ast.literal_eval(response)
+  
+    response = response.as_json_string()
+    response = json.loads(response)
     response = response["items"][0]["address"]["label"]
-    print(response)
     return response
 
 

@@ -1,5 +1,5 @@
 export default {
-    ApiLink:"http://192.168.0.105:5000/",
+    ApiLink:"http://192.168.0.107:5000/",
     Home: {
         noticeBoard: "Notice Board",
         noticeTitle: "Notice Title",

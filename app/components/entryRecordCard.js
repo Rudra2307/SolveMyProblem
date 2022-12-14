@@ -37,13 +37,13 @@ const EntryCard = ({ props }) => {
             </View>
         );
     } else {
+        
         return (
-
             <TouchableOpacity>
                 <View style={styles.cardContainer}>
                     <View style={styles.textContainer}>
                         <View style={styles.row}>
-                            <Image source={{ uri: props.image_link }}
+                            <Image source={{ uri:props.image_link  }}
                                 style={{ width: wp("78%"), height: wp("39%"), borderRadius: 10 }} />
                             {/* <Text style={styles.userName}> Abdul Ansari</Text> */}
                         </View>
