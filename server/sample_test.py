@@ -13,13 +13,14 @@ def getLocationDetails(latitude, longitude):
 
     
     response = gp.retrieve_addresses([latitude, longitude])
-    print(response)
     response = str(response)
-    response = ast.literal_eval(response)
     print(response)
+    response = ast.literal_eval(response)
     response = response["items"][0]["address"]["label"]
 
     return response
 
-result = getLocationDetails(19.310472, 72.854042)
+result = getLocationDetails(19.288559, 72.854530)
 print(result)
+# 19.3807883
+# 72.8295159
