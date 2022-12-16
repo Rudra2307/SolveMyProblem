@@ -1,33 +1,33 @@
-from flask import render_template, request, redirect, url_for, session, escape, Flask, jsonify
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from bson import regex, ObjectId
-from random import randint
-import json
-import pathlib
+import ast
+import base64
 import hashlib
-import requests
-import random
+import json
+import math
 import os
-from datetime import datetime
-import matplotlib.pyplot as plt
-from flask_pymongo import PyMongo
+import pathlib
+import random
 import re
 import smtplib
-import math
-import smtplib
-from werkzeug.utils import secure_filename
-from fastai.vision import *
+from datetime import datetime
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from io import BytesIO
+from math import asin, cos, radians, sin, sqrt
+from os.path import dirname, join, realpath
+from random import randint
+
+import herepy
+import matplotlib.pyplot as plt
 # import cv2
 import numpy as np
-import base64
+import requests
+from bson import ObjectId, regex
+from fastai.vision import *
+from flask import (Flask, escape, jsonify, redirect, render_template, request,
+                   session, url_for)
+from flask_pymongo import PyMongo
 from PIL import Image
-from io import BytesIO
-from math import radians, cos, sin, asin, sqrt
-import herepy
-import ast
-from os.path import join, dirname, realpath
-
+from werkzeug.utils import secure_filename
 
 port = 5000
 # host = "192.168.43.95"
