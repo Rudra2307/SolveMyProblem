@@ -48,7 +48,7 @@ const EntryCard = ({ props }) => {
                             {/* <Text style={styles.userName}> Abdul Ansari</Text> */}
                         </View>
                         <View style={styles.row}>
-                            <Ionicons name="md-list-box" size={12} color="black" />
+                            <Ionicons name="list" size={12} color="black" />
                             <Text style={styles.flatNo}>  {props.grievance_type}  </Text>
 
                         </View>
@@ -76,5 +76,5 @@ const styles = StyleSheet.create({
     textContainer: {},
     userName: { fontFamily: "Quicksand-Bold", fontSize: 20, paddingBottom: wp("0.8%") },
     flatNo: { fontFamily: "Quicksand-SemiBold" },
-    row: { flexDirection: "row", alignItems: "center", paddingBottom: wp("1%") }
+    row: { flexDirection: "row", alignItems: "center", paddingBottom: wp("2%") }
 });

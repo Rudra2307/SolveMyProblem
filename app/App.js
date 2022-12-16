@@ -17,7 +17,9 @@ const AppNavigator = createStackNavigator({
     screen: Login,
     navigationOptions: {
       title: 'Login',
-      headerShown: false //this will hide the header
+      headerShown: false, //this will hide the header
+      headerLeft: null
+
     },
   },
   Home: {

@@ -48,11 +48,11 @@ export default {
         settings:"Settings",
         accountInformation:"Account information",
         credentials:"Login and credentials",
-        improve:"Improve Sahayak",
+        improve:"Improve Solve My Problem",
         edit:"Edit Info",
         supportTitle:"Support & Feedback",
         suggestion:"Share your valuable Feedback and suggestion",
-        write:"Write to Sahayak",
+        write:"Write to SMP",
         visit:"Visit support and read FAQ's",
         support:"Go to Support"
 

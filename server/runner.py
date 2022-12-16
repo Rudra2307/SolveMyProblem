@@ -250,8 +250,10 @@ def uploader():
         data["area"] = "unpredicted"
 
         mongo.db.grievance.insert_one(data)
+        print("prediction started")
 
         predict()
+        print("prediction done")
 
         return jsonify({"status": 'success', "message": "registered successfully!"})
 

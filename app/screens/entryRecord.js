@@ -106,7 +106,8 @@ export default function EntryRecords({ navigation }) {
             <View style={{ paddingHorizontal: wp("4%"), backgroundColor: "white" }}>
                 <View style={{ paddingBottom: "7%", paddingTop: "4%" }}>
                     <TouchableOpacity style={{ position: "absolute", top: hp("2%") }}>
-                        <MaterialIcons name="keyboard-backspace" size={24} color="black" />
+                        <MaterialIcons         onPress={() => navigation.navigate('Home')}
+ name="keyboard-backspace" size={24} color="black" />
                     </TouchableOpacity>
                     <View style={{ alignItems: "center", flexGrow: 1 }}>
                         <Text style={{ fontFamily: "Quicksand-Bold", fontSize: 20, color: "black", textAlign: "center" }} >Your reports</Text>

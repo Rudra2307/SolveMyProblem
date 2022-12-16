@@ -1,5 +1,6 @@
 import React,{Text,useEffect} from 'react';
 import * as Location from 'expo-location';
+
 import CameraPage from '../components/camerapage';
 
 export default function Home({ navigation }) {
@@ -19,6 +20,7 @@ export default function Home({ navigation }) {
 
         })();
     },[]);
+    
     return (
 
         // <Text>{"hello"}</Text>
