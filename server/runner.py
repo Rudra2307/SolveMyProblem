@@ -587,4 +587,4 @@ def sendMail(to, subject, body):
 
 
 if __name__ == '__main__':
-    app.run(host=host, port=port, debug=True)
+    app.run(debug=True, port=os.getenv("PORT", default=5000))
