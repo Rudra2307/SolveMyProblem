@@ -39,7 +39,7 @@ export default function CameraPage({navigation}) {
 
             navigation.navigate('Login')
         } catch (e) {
-            console.warn(e);
+            console.warn("",e);
         } finally {
             setDataLoaded(true);
             // Hiding the SplashScreen
@@ -73,6 +73,7 @@ export default function CameraPage({navigation}) {
     useEffect(() => {
         (async () => {
             const { status } = await requestCameraPermissionsAsync();
+            console.log("log33",status)
             setHasPermission(status === 'granted');
         })();
     }, []); 

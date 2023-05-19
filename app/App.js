@@ -1,4 +1,6 @@
 import React from 'react';
+import { LogBox } from "react-native"
+
 import * as Font from 'expo-font';
 import Login from './screens/Login';
 import { createAppContainer } from 'react-navigation';
@@ -68,6 +70,8 @@ export default function App() {
     "Quicksand-Bold": require("./assets/fonts/Quicksand-Bold.ttf"),
     "Quicksand-SemiBold": require("./assets/fonts/Quicksand-SemiBold.ttf"),
   });
+  LogBox.ignoreAllLogs(true)
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>

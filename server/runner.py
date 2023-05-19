@@ -15,22 +15,28 @@ from io import BytesIO
 from math import asin, cos, radians, sin, sqrt
 from os.path import dirname, join, realpath
 from random import randint
-
 import herepy
 import matplotlib.pyplot as plt
 # import cv2
 import numpy as np
 import requests
-from bson import ObjectId, regex
-from fastai.vision import *
+from bson import ObjectId
 from flask import (Flask, escape, jsonify, redirect, render_template, request,
                    session, url_for)
 from flask_pymongo import PyMongo
 from PIL import Image
 from werkzeug.utils import secure_filename
+import tensorflow as tf
+from tensorflow.keras import models
+from tensorflow.keras.models import Model
+import cv2
+from keras.preprocessing import image
+from keras_preprocessing.image import load_img,img_to_array
+import numpy as np
+
 
 port = 5000
-# host = "192.168.43.95"
+# host = "192.168.185.251"
 host = "192.168.0.107"
 
 app = Flask(__name__)
@@ -150,6 +156,12 @@ def upload():
 
 
 @app.route('/hello/<send_mail>', methods=['GET', 'POST'])
+def preprareImage(PathForImage):
+                image = load_img(PathForImage, target_size=(224,224))
+                imgResult = img_to_array(image)
+                imgResult = np.expand_dims(imgResult, axis = 0)
+                imgResult = imgResult / 255.
+                return imgResult
 def predict(send_mail="no"):
     send_mail_to = None
     grievance_all = list(mongo.db.grievance.find({"grievance_type": "unpredicted"}))
@@ -157,37 +169,35 @@ def predict(send_mail="no"):
     for i in grievance_all:
         if 'grievance_type' not in i or i['grievance_type'] == "unpredicted":
             filename = str(i['grievance_id'][:5])
+            categories = ['garbage','pothole','sewage']
+            model = tf.keras.models.load_model('ml/smpmodel.h5')
+            # print (model.summary())
+            testImage = str(i['image_link'])
+            imgForModel = preprareImage(testImage)
+            resultArray = model.predict(imgForModel, verbose=1)
+            answer = np.argmax(resultArray, axis=1)
+            print(answer)
+            index = answer[0]
+            pred_class=categories[index]
+            print("The predicted car is : "+ categories[index])
+        all1 = mongo.db.grievance.find_one_and_update({'grievance_id': i["grievance_id"]}, {'$set': {"grievance_type": str(categories[index])}})
+    
+            # img = open_image(pathh)
+            # pred_class, pred_idx, outputs = learn.predict(img)
+            # print(str(pred_class))
+        
+        if(str(pred_class) == "sewage"):
+            send_mail_to = "deshnagandhi2002@gmail.com"
+        if(str(pred_class) == "garbage"):
+            send_mail_to = "deshnagandhi2002@gmail.com"
+        if(str(pred_class) == "pothole"):
+            send_mail_to = "deshnagandhi2002@gmail.com"
 
-            pathh = i['image_link']
-            
-            path = Path('')
-            
-            classes = ['garbage', 'pothole', 'sewage']
-            
-            data = ImageDataBunch.single_from_classes(path, classes, ds_tfms=get_transforms(), size=240).normalize(imagenet_stats)
-            
-            learn = cnn_learner(data, models.resnet101, metrics=error_rate)
-            
-            learn.load('phase1')
-            
-            img = open_image(pathh)
-            pred_class, pred_idx, outputs = learn.predict(img)
-            print(str(pred_class))
-            
-            if(str(pred_class) == "sewage"):
-                send_mail_to = "deshnagandhi2002@gmail.com"
-            if(str(pred_class) == "garbage"):
-                send_mail_to = "deshnagandhi2002@gmail.com"
-            if(str(pred_class) == "pothole"):
-                send_mail_to = "deshnagandhi2002@gmail.com"
-            all1 = mongo.db.grievance.find_one_and_update({'grievance_id': i["grievance_id"]}, {
-                '$set': {"grievance_type": str(pred_class)}})
+        if send_mail == "yes":
 
-            if send_mail == "yes":
-
-                sendMail(send_mail_to, "New Grievance Received",
-                         "Your department has received a grievance. Please check your portel for details.")
-            return "smd"
+            sendMail(send_mail_to, "New Grievance Received",
+                        "Your department has received a grievance. Please check your portel for details.")
+        return "smd"
 
 
 def distance(lat1, lat2, lon1, lon2):
@@ -250,10 +260,8 @@ def uploader():
         data["area"] = "unpredicted"
 
         mongo.db.grievance.insert_one(data)
-        print("prediction started")
 
         predict()
-        print("prediction done")
 
         return jsonify({"status": 'success', "message": "registered successfully!"})
 
@@ -363,7 +371,7 @@ def index():
             
             ass_array = {"virar": [19.4564, 72.7925],
                          "panvel": [18.9894, 73.1175],
-                         "ghatkopar": [19.0858, 72.9090],
+                         "vile parle": [19.0858, 72.9090],
                          "dahisar": [19.2494, 72.8596],
                          "mira road ": [19.2871, 72.8688]}
             list_distance = {}
@@ -442,10 +450,10 @@ def panvel():
     return render_template('problems.html', all=grievance_all)
 
 
-@app.route("/ghatkopar")
-def ghatkopar():
+@app.route("/vileparle")
+def vile_parle():
     grievance_all = list(mongo.db.grievance.find(
-        {"assigned_authority": "ghatkopar"}))
+        {"assigned_authority": "vile parle"}))
 
     for i in grievance_all:
         if 'area' not in i or i['area'] == "unpredicted":
@@ -455,10 +463,10 @@ def ghatkopar():
             update_location = mongo.db.grievance.find_one_and_update(
                 {'grievance_id': i["grievance_id"]}, {'$set': {"area": res}})
             update_location = mongo.db.grievance.find_one_and_update(
-                {'grievance_id': i["grievance_id"]}, {'$set': {"assigned_authority": 'ghatkopar'}})
+                {'grievance_id': i["grievance_id"]}, {'$set': {"assigned_authority": 'vile parle'}})
 
             grievance_all = list(mongo.db.grievance.find(
-                {"assigned_authority": "ghatkopar"}))
+                {"assigned_authority": "vile parle"}))
     return render_template('problems.html', all=grievance_all)
 
 
@@ -553,11 +561,11 @@ def potholes():
 
 
 def sendMail(to, subject, body):
-    gmail_user = 'lcinfinitie@gmail.com'
-    gmail_password = '8149379515r'
+    gmail_user = 'deshnagandhi2002@gmail.com'
+    gmail_password = 'deshna@12345'
 
     sent_from = gmail_user
-    to = "singroleketan@gmail.com"
+    to = "devraj.dm007@gmail.com"
     subject = subject
     body = body
 

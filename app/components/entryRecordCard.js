@@ -5,6 +5,7 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
@@ -50,6 +51,12 @@ const EntryCard = ({ props }) => {
                         <View style={styles.row}>
                             <Ionicons name="list" size={12} color="black" />
                             <Text style={styles.flatNo}>  {props.grievance_type}  </Text>
+
+                        </View>
+                        <View style={styles.row}>
+                            
+                        <MaterialCommunityIcons name="list-status" size={15} color="black" />
+                            <Text style={styles.flatNo}>  {props.status}  </Text>
 
                         </View>
                         <View style={styles.row}>
